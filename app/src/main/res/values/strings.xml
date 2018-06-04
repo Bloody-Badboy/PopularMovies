@@ -1,0 +1,26 @@
+<resources>
+  <string name="app_name">Popular Movies</string>
+  <string name="content_description_movie_poster">Movie Poster</string>
+  <string name="unknown">Unknown</string>
+  <string name="retry">RETRY</string>
+
+  <string name="menu_title_sort_by">Sort By</string>
+  <string name="menu_title_sort_by_popularity">Popularity</string>
+  <string name="menu_title_sort_by_top_rated">Top Rated</string>
+  <string name="movie_details_plot_explanation_label">Plot Explanation</string>
+  <string name="movie_details_movie_backdrop">Movie Backdrop</string>
+  <string name="movie_details_movie_poster">Movie Poster</string>
+
+  <string name="loading">Loading…</string>
+  <string name="no_internet">No Internet Connection!</string>
+  <string name="something_went_wrong">Oops! Something went wrong, Please try again.</string>
+
+  <string name="transition_movie_poster">moviePoster</string>
+  <string name="transition_movie_title">movieTitle</string>
+  <string name="transition_movie_genres">movieGenres</string>
+  <string name="transition_movie_release_date">movieReleaseDate</string>
+  <string name="transition_movie_ratebar">movieRateBar</string>
+  <string name="transition_movie_rating">movieRating</string>
+
+  <string name="details_activity_movie_title_format">%s (%s)</string>
+</resources>

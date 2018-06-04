@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+
+android {
+
+  compileSdkVersion 27
+
+  defaultConfig {
+    applicationId "me.bloodybadboy.popularmovies"
+    minSdkVersion 16
+    targetSdkVersion 27
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  buildTypes.each {
+    it.resValue('string', "the_movie_db_api_key", propOrThrow('THE_MOVIE_DB_API_KEY'))
+  }
+
+  lintOptions {
+    textReport true
+    textOutput 'stdout'
+    lintConfig rootProject.file('lint.xml')
+
+    checkDependencies true
+    checkTestSources true
+    explainIssues false
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+dependencies {
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+  // Android Support Libraries
+  // AppCompat
+  implementation "com.android.support:appcompat-v7:${rootProject.versions.supportLibrary}"
+
+  // Support Design
+  implementation "com.android.support:design:${rootProject.versions.supportLibrary}"
+
+  // CardView
+  implementation "com.android.support:cardview-v7:${rootProject.versions.supportLibrary}"
+
+  // RecycleView
+  implementation "com.android.support:recyclerview-v7:${rootProject.versions.supportLibrary}"
+
+  // Palette
+  implementation "com.android.support:palette-v7:${rootProject.versions.supportLibrary}"
+
+  // Constraint Layout
+  implementation "com.android.support.constraint:constraint-layout:${rootProject.versions.constraintLayout}"
+
+  // Timber
+  implementation "com.jakewharton.timber:timber:${rootProject.versions.timber}"
+
+  // RxJava and RxAndroid
+  implementation "io.reactivex.rxjava2:rxjava:${rootProject.versions.rxJava2}"
+  implementation "io.reactivex.rxjava2:rxandroid:${rootProject.versions.rxAndroid2}"
+
+  //Retrofit2
+  implementation "com.squareup.retrofit2:retrofit:${rootProject.versions.retrofit}"
+  implementation "com.squareup.retrofit2:converter-moshi:${rootProject.versions.retrofit}"
+
+  // RxJava Retrofit2 Adapter
+  implementation "com.squareup.retrofit2:adapter-rxjava2:${rootProject.versions.rxRetrofit2Adapter}"
+
+  // OkHttp Logging Interceptor
+  implementation "com.squareup.okhttp3:logging-interceptor:${rootProject.versions.loggingInterceptor}"
+
+  // ButterKnife
+  implementation "com.jakewharton:butterknife:${rootProject.versions.butterKnife}"
+  annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.versions.butterKnife}"
+
+  // Glide
+  implementation "com.github.bumptech.glide:glide:${rootProject.versions.glide}"
+  annotationProcessor "com.github.bumptech.glide:compiler:${rootProject.versions.glide}"
+
+  // Blurry
+  implementation "jp.wasabeef:blurry:${rootProject.versions.blurry}"
+
+  // Testing
+  testImplementation "junit:junit:${rootProject.versions.junit}"
+  androidTestImplementation "com.android.support.test:runner:${rootProject.versions.supportTestRunner}"
+  androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.versions.espressoCore}"
+}
