@@ -97,10 +97,10 @@
           android:layout_marginLeft="@dimen/default_space_small"
           android:layout_marginStart="@dimen/default_space_small"
           android:isIndicator="true"
-          android:theme="@style/RatingBarWhite"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           tools:rating="5"
+          android:theme="@style/RatingBar.Theme.White"
           style="@style/Widget.AppCompat.RatingBar.Small"
           />
       <TextView

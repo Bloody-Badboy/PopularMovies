@@ -19,34 +19,20 @@ import me.bloodybadboy.popularmovies.utils.ArrayUtils;
       return new Movie[size];
     }
   };
-  @Json(name = "vote_count")
-  private int mVoteCount;
-  @Json(name = "id")
-  private int mMovieId;
-  @Json(name = "video")
-  private boolean mVideo;
-  @Json(name = "vote_average")
-  private double mVoteAverage;
-  @Json(name = "title")
-  private String mTitle;
-  @Json(name = "popularity")
-  private double mPopularity;
-  @Json(name = "poster_path")
-  private String mPosterPath;
-  @Json(name = "original_language")
-  private String mOriginalLanguage;
-  @Json(name = "original_title")
-  private String mOriginalTitle;
-  @Json(name = "genre_ids")
-  private List<Integer> mGenreIds;
-  @Json(name = "backdrop_path")
-  private String mBackdropPath;
-  @Json(name = "adult")
-  private boolean mAdult;
-  @Json(name = "overview")
-  private String mOverview;
-  @Json(name = "release_date")
-  private String mReleaseDate;
+  @Json(name = "vote_count") private int mVoteCount;
+  @Json(name = "id") private int mMovieId;
+  @Json(name = "video") private boolean mVideo;
+  @Json(name = "vote_average") private double mVoteAverage;
+  @Json(name = "title") private String mTitle;
+  @Json(name = "popularity") private double mPopularity;
+  @Json(name = "poster_path") private String mPosterPath;
+  @Json(name = "original_language") private String mOriginalLanguage;
+  @Json(name = "original_title") private String mOriginalTitle;
+  @Json(name = "genre_ids") private List<Integer> mGenreIds;
+  @Json(name = "backdrop_path") private String mBackdropPath;
+  @Json(name = "adult") private boolean mAdult;
+  @Json(name = "overview") private String mOverview;
+  @Json(name = "release_date") private String mReleaseDate;
 
   protected Movie(Parcel in) {
     mVoteCount = in.readInt();

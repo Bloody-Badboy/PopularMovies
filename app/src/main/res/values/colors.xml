@@ -8,4 +8,13 @@
   <color name="colorPrimary">@color/primaryColor</color>
   <color name="colorPrimaryDark">@color/primaryDarkColor</color>
   <color name="colorAccent">@color/primaryLightColor</color>
+
+  <color name="colorFillPrimary">#212121</color>
+  <color name="colorFillSecondary">#757575</color>
+
+  <color name="colorDivider">#ffeeeeee</color>
+  <color name="colorTextHintText">#ff9e9e9e</color>
+  <color name="colorTextSecondary">@color/colorFillSecondary</color>
+  <color name="colorTextPrimary">@color/colorFillPrimary</color>
+<!--  <color name="colorTextPrimaryDark">@color/</color>-->
 </resources>

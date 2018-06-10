@@ -1,7 +1,7 @@
 package me.bloodybadboy.popularmovies.base;
 
 public interface BasePresenter {
-  void onCreate();
+  void onStart();
 
-  void onDestroy();
+  void onStop();
 }

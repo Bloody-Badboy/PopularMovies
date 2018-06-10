@@ -1,12 +1,10 @@
 package me.bloodybadboy.popularmovies.ui.homescreen.presenter;
 
-import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import java.util.List;
 import java.util.Map;
 import me.bloodybadboy.popularmovies.data.model.Genre;
-import me.bloodybadboy.popularmovies.data.model.MovieList;
 import me.bloodybadboy.popularmovies.data.source.MoviesDataSource;
 import me.bloodybadboy.popularmovies.rxbus.RxBus;
 import me.bloodybadboy.popularmovies.storage.MovieGenreStore;
@@ -15,17 +13,18 @@ import me.bloodybadboy.popularmovies.ui.homescreen.model.DetailsActivityLaunchMo
 import me.bloodybadboy.popularmovies.utils.RxUtils;
 import me.bloodybadboy.popularmovies.utils.Utils;
 
-import static me.bloodybadboy.popularmovies.Constants.SortOrder;
+import static me.bloodybadboy.popularmovies.Constants.SortByOrder;
 
 public class HomeActivityPresenter implements HomeActivityContract.Presenter {
 
   private HomeActivityContract.View mView;
   private MoviesDataSource mMoviesDataSource;
   private CompositeDisposable mCompositeDisposable;
+  private Disposable mRxBusDisposable;
 
   private Disposable mMovieListDisposable;
 
-  private SortOrder mSortOrder = SortOrder.POPULARITY;
+  private SortByOrder mSortByOrder = SortByOrder.POPULARITY;
 
   private boolean isGenreListLoaded = false;
 
@@ -34,28 +33,30 @@ public class HomeActivityPresenter implements HomeActivityContract.Presenter {
     mMoviesDataSource = moviesDataSource;
   }
 
-  @Override public void onCreate() {
+  @Override public void onStart() {
     mCompositeDisposable = new CompositeDisposable();
-    mCompositeDisposable.add(RxBus.getInstance().toObservable().subscribe(o -> {
+    mRxBusDisposable = new CompositeDisposable();
+
+    mRxBusDisposable = RxBus.getInstance().toObservable().subscribe(o -> {
       if (o instanceof DetailsActivityLaunchModel) {
         DetailsActivityLaunchModel launchModel = (DetailsActivityLaunchModel) o;
         mView.launchDetailsActivity(launchModel);
-      } else if (o instanceof SortOrder) {
-        SortOrder sortOrder = (SortOrder) o;
-        if (mSortOrder != sortOrder) {
-          mSortOrder = sortOrder;
+      } else if (o instanceof SortByOrder) {
+        SortByOrder sortByOrder = (SortByOrder) o;
+        if (mSortByOrder != sortByOrder) {
+          mSortByOrder = sortByOrder;
           mView.onSortOrderChanged();
         }
       }
-    }));
+    });
   }
 
-  @Override public void onDestroy() {
-    RxUtils.dispose(mCompositeDisposable);
+  @Override public void onStop() {
+    RxUtils.dispose(mRxBusDisposable);
   }
 
   @Override
-  public void fetchMovieListFromServer(Map<String, String> options) {
+  public void fetchMovieListDataLayer(Map<String, String> options) {
     if (!isGenreListLoaded) {
       Disposable genreListDisposable = mMoviesDataSource.getMovieGenreList()
           .compose(RxUtils.applyIOScheduler())
@@ -68,24 +69,21 @@ public class HomeActivityPresenter implements HomeActivityContract.Presenter {
                     MovieGenreStore.getInstance().store(Utils.getGenresMap(genreList.getGenres()));
                   }
                 }
-                fetchMovieListFromServer(options);
+                fetchMovieListDataLayer(options);
               }, throwable -> mView.onMovieListFetchError(throwable));
       RxUtils.addToCompositeSubscription(mCompositeDisposable, genreListDisposable);
     } else {
       RxUtils.dispose(mMovieListDisposable);
 
-      Single<MovieList> movieListSingle;
-      if (mSortOrder == SortOrder.POPULARITY) {
-        movieListSingle = mMoviesDataSource.getPopularMovieList(options);
-      } else {
-        movieListSingle = mMoviesDataSource.getTopRatedMovieList(options);
-      }
-
-      mMovieListDisposable = movieListSingle
+      mMovieListDisposable = mMoviesDataSource.getMovieList(mSortByOrder, options)
           .compose(RxUtils.applyIOScheduler())
           .subscribe(movieList -> mView.onMovieListFetchSuccess(movieList),
               throwable -> mView.onMovieListFetchError(throwable));
       RxUtils.addToCompositeSubscription(mCompositeDisposable, mMovieListDisposable);
     }
+  }
+
+  @Override public void clearCompositeSubscription() {
+    RxUtils.clear(mCompositeDisposable);
   }
 }

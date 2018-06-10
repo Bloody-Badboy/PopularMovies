@@ -17,8 +17,7 @@
       android:theme="@style/AppTheme"
       tools:ignore="GoogleAppIndexingWarning">
     <activity
-        android:name=".ui.homescreen.view.HomeActivity"
-        android:screenOrientation="portrait">
+        android:name=".ui.homescreen.view.HomeActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -26,8 +25,13 @@
       </intent-filter>
     </activity>
     <activity
-        android:name=".ui.details.view.DetailsActivity"
-        android:screenOrientation="portrait"/>
+        android:name=".ui.details.view.DetailsActivity"/>
+
+    <provider
+        android:name=".data.source.local.MovieProvider"
+        android:authorities="@string/content_authority"
+        android:exported="false"
+        android:syncable="true"/>
   </application>
 
 </manifest>

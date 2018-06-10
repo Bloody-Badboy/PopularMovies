@@ -32,8 +32,8 @@ public final class RxUtils {
     }
   }
 
-  public static void addToCompositeSubscription(CompositeDisposable compositeDisposable,
-      Disposable disposable) {
+  public static void addToCompositeSubscription(@Nullable CompositeDisposable compositeDisposable,
+      @Nullable Disposable disposable) {
     if (compositeDisposable != null && disposable != null) {
       compositeDisposable.add(disposable);
     }

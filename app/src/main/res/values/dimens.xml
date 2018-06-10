@@ -5,16 +5,16 @@
   <dimen name="default_space_tiny">4dp</dimen>
   <dimen name="default_space_small">8dp</dimen>
   <dimen name="default_space">16dp</dimen>
-<!--  <dimen name="default_space_medium_small">12dp</dimen>-->
-<!--  <dimen name="default_space_medium">20dp</dimen>-->
-<!--  <dimen name="default_space_big">24dp</dimen>-->
-<!--  <dimen name="default_space_very_tiny">2dp</dimen>-->
+  <!--  <dimen name="default_space_medium_small">12dp</dimen>-->
+  <!--  <dimen name="default_space_medium">20dp</dimen>-->
+  <!--  <dimen name="default_space_big">24dp</dimen>-->
+  <!--  <dimen name="default_space_very_tiny">2dp</dimen>-->
 
   <dimen name="dimen_movie_list_grid_item_spacing">8dp</dimen>
   <dimen name="dimen_movie_details_backdrop_height">260dp</dimen>
   <dimen name="movie_details_poster_width">150dp</dimen>
   <dimen name="movie_details_poster_height">210dp</dimen>
-  <dimen name="movie_details_poster_card_elevation">4dp</dimen>
+  <dimen name="movie_details_poster_card_elevation">6dp</dimen>
   <dimen name="movie_details_poster_card_corner_radius">4dp</dimen>
 
   <dimen name="dimen_text_small">12sp</dimen>
@@ -22,4 +22,5 @@
 
   <dimen name="listing_item_card_corner_radius">4dp</dimen>
   <dimen name="listing_item_card_elevation">4dp</dimen>
+  <dimen name="text_margin">16dp</dimen>
 </resources>

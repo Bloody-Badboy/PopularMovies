@@ -1,13 +1,17 @@
 package me.bloodybadboy.popularmovies.data.source;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import java.util.Map;
-import me.bloodybadboy.popularmovies.data.model.MovieGenreList;
-import me.bloodybadboy.popularmovies.data.model.MovieList;
+import me.bloodybadboy.popularmovies.Constants.SortByOrder;
+import me.bloodybadboy.popularmovies.data.model.ExtendedMovieDetails;
+import me.bloodybadboy.popularmovies.data.model.Movie;
+import me.bloodybadboy.popularmovies.data.model.Genres;
+import me.bloodybadboy.popularmovies.data.model.Movies;
 
 public class MoviesDataRepository implements MoviesDataSource {
 
-  private static MoviesDataRepository INSTANCE = null;
+  private volatile static MoviesDataRepository INSTANCE = null;
   private final MoviesDataSource mLocalDataSource;
   private final MoviesDataSource mRemoteDataSource;
 
@@ -29,15 +33,19 @@ public class MoviesDataRepository implements MoviesDataSource {
     return INSTANCE;
   }
 
-  @Override public Single<MovieGenreList> getMovieGenreList() {
+  @Override public Single<Genres> getMovieGenreList() {
     return mRemoteDataSource.getMovieGenreList();
   }
 
-  @Override public Single<MovieList> getPopularMovieList(Map<String, String> options) {
-    return mRemoteDataSource.getPopularMovieList(options);
+  @Override public Single<Movies> getMovieList(SortByOrder sortByOrder, Map<String, String> options) {
+    return mRemoteDataSource.getMovieList(sortByOrder, options);
   }
 
-  @Override public Single<MovieList> getTopRatedMovieList(Map<String, String> options) {
-    return mRemoteDataSource.getTopRatedMovieList(options);
+  @Override public Single<ExtendedMovieDetails> getExtendedMovieDetails(String movieId) {
+    return mRemoteDataSource.getExtendedMovieDetails(movieId);
+  }
+
+  @Override public Completable addMovieToFavourites(Movie movie) {
+   return mLocalDataSource.addMovieToFavourites(movie);
   }
 }

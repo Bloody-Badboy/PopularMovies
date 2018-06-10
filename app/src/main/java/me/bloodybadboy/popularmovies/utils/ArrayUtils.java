@@ -1,5 +1,6 @@
 package me.bloodybadboy.popularmovies.utils;
 
+import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ public final class ArrayUtils {
   private ArrayUtils() {
     throw new AssertionError();
   }
-  public static int[] toPrimitiveIntArray(List<Integer> integers) {
+  public static int[] toPrimitiveIntArray(@Nullable List<Integer> integers) {
     if (integers == null) {
       return null;
     } else if (integers.size() == 0) {
@@ -20,7 +21,7 @@ public final class ArrayUtils {
     return result;
   }
 
-  public static List<Integer> toIntegerList(int[] array) {
+  public static List<Integer> toIntegerList(@Nullable int[] array) {
     if (array == null) {
       return null;
     } else if (array.length == 0) {

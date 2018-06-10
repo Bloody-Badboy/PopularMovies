@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="BottomArcLayout">
-        <attr name="arc_height" format="dimension" />
-        <attr name="arc_inside" format="boolean" />
+    <declare-styleable name="BottomArcImageView">
+        <attr name="arcHeight" format="dimension" />
+        <attr name="arcElevation" format="dimension"/>
     </declare-styleable>
 </resources>

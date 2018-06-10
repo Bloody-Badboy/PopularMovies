@@ -24,7 +24,7 @@ import java.util.List;
 import me.bloodybadboy.popularmovies.Constants;
 import me.bloodybadboy.popularmovies.R;
 import me.bloodybadboy.popularmovies.data.model.Movie;
-import me.bloodybadboy.popularmovies.data.model.MovieList;
+import me.bloodybadboy.popularmovies.data.model.Movies;
 import me.bloodybadboy.popularmovies.injection.Injection;
 import me.bloodybadboy.popularmovies.rxbus.RxBus;
 import me.bloodybadboy.popularmovies.ui.details.view.DetailsActivity;
@@ -38,9 +38,9 @@ import me.bloodybadboy.popularmovies.utils.NetworkUtil;
 import me.bloodybadboy.popularmovies.utils.Utils;
 import timber.log.Timber;
 
-public class HomeActivity extends AppCompatActivity implements HomeActivityContract.View {
+public class HomeActivity extends AppCompatActivity /*implements HomeActivityContract.View*/ {
 
-  @BindView(R.id.coordinator_layout)
+/*  @BindView(R.id.coordinator_layout)
   CoordinatorLayout mCoordinatorLayout;
 
   @BindView(R.id.status_bar)
@@ -53,31 +53,32 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
   Toolbar mToolbar;
 
   @BindView(R.id.layout_loading)
-  View mLoadingLayout;
+  View mLoadingLayout;*/
 
-  private HomeActivityContract.Presenter mHomeActivityPresenter;
+/*  private HomeActivityContract.Presenter mHomeActivityPresenter;*/
+  /*
   private Unbinder mUnbinder;
 
   private List<Movie> mMovieList = new ArrayList<>();
   private MovieListAdapter mMovieListAdapter;
   private OnLoadMoreScrollListener mOnLoadMoreScrollListener;
 
-  private boolean sortOrderChanged = false;
+  private boolean hasChangedSortOrder = false;
   private boolean hasMorePages = true;
   private boolean isProgressVisible;
   private int currentPage = 0;
+  */
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
-    mUnbinder = ButterKnife.bind(this);
-    setSupportActionBar(mToolbar);
+/*    mUnbinder = ButterKnife.bind(this);
+    setSupportActionBar(mToolbar);*/
 
-    setPresenter(new HomeActivityPresenter(this, Injection.providesDataRepo()));
-    mHomeActivityPresenter.onCreate();
+/*   mHomeActivityPresenter = new HomeActivityPresenter(this, Injection.providesDataRepo()));*/
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+/*    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       mStatusBarBackGround.getLayoutParams().height = getStatusBarHeight();
     } else {
       mStatusBarBackGround.setVisibility(View.GONE);
@@ -114,16 +115,24 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
         return 1;
       }
     });
-    showProgress();
-    if (NetworkUtil.isOnline()) {
-      loadMoreProducts();
-    } else {
-      showSnackBar(getString(R.string.no_internet), this::loadMoreProducts);
-    }
+    requestForMovieList();*/
+  }
+
+/*  @Override protected void onStart() {
+    super.onStart();
+    mHomeActivityPresenter.onStart();
+  }
+
+  @Override protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+  }
+
+  @Override protected void onStop() {
+    super.onStop();
+    mHomeActivityPresenter.onStop();
   }
 
   @Override protected void onDestroy() {
-    mHomeActivityPresenter.onDestroy();
     mMovieListRecycleView.removeOnScrollListener(mOnLoadMoreScrollListener);
     mUnbinder.unbind();
     super.onDestroy();
@@ -141,9 +150,9 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
       case R.id.sort_by_rating:
         item.setChecked(!item.isChecked());
         if (item.getItemId() == R.id.sort_by_rating) {
-          RxBus.getInstance().send(Constants.SortOrder.TOP_RATED);
+          RxBus.getInstance().send(Constants.SortByOrder.TOP_RATED);
         } else if (item.getItemId() == R.id.sort_by_popularity) {
-          RxBus.getInstance().send(Constants.SortOrder.POPULARITY);
+          RxBus.getInstance().send(Constants.SortByOrder.POPULARITY);
         }
         return true;
       default:
@@ -152,7 +161,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
   }
 
   @Override
-  public void onMovieListFetchSuccess(MovieList movieList) {
+  public void onMovieListFetchSuccess(Movies movieList) {
 
     hideProgress();
 
@@ -164,8 +173,8 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
       }
       List<Movie> movies = movieList.getResults();
       if (movies != null && movies.size() > 0) {
-        if (sortOrderChanged) {
-          sortOrderChanged = false;
+        if (hasChangedSortOrder) {
+          hasChangedSortOrder = false;
           mMovieList.clear();
           mMovieList.addAll(movies);
           mMovieListAdapter.swapMovieListItems(mMovieList);
@@ -183,17 +192,17 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
 
   @Override public void onMovieListFetchError(Throwable throwable) {
     showSnackBar(getString(R.string.something_went_wrong),
-        () -> mHomeActivityPresenter.fetchMovieListFromServer(
+        () -> mHomeActivityPresenter.fetchMovieListDataLayer(
             Utils.getQueryMapForMovieList(currentPage)));
-    /*if (throwable instanceof HttpException) {
+    *//*if (throwable instanceof HttpException) {
     } else if (throwable instanceof SocketTimeoutException) {
     } else if (throwable instanceof IOException) {
     } else {
-    }*/
+    }*//*
   }
 
   @Override public void onSortOrderChanged() {
-    sortOrderChanged = true;
+    hasChangedSortOrder = true;
     showProgress();
     currentPage = 0;
     loadMoreProducts();
@@ -212,6 +221,14 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
     mHomeActivityPresenter = presenter;
   }
 
+  private void requestForMovieList(){
+    if (NetworkUtil.isOnline()) {
+      showProgress();
+      loadMoreProducts();
+    } else {
+      showSnackBar(getString(R.string.no_internet), this::requestForMovieList);
+    }
+  }
   protected void showSnackBar(String message, @Nullable Runnable runnable) {
     Snackbar snackBar =
         Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_INDEFINITE);
@@ -255,9 +272,9 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityContr
   private void loadMoreProducts() {
     if (NetworkUtil.isOnline()) {
       currentPage += 1;
-      mHomeActivityPresenter.fetchMovieListFromServer(Utils.getQueryMapForMovieList(currentPage));
+      mHomeActivityPresenter.fetchMovieListDataLayer(Utils.getQueryMapForMovieList(currentPage));
     } else {
       showSnackBar(getString(R.string.no_internet), this::loadMoreProducts);
     }
-  }
+  }*/
 }

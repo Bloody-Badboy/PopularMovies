@@ -22,5 +22,10 @@
   <string name="transition_movie_ratebar">movieRateBar</string>
   <string name="transition_movie_rating">movieRating</string>
 
-  <string name="details_activity_movie_title_format">%s (%s)</string>
+  <string name="details_activity_movie_title_format">%1$s (%2$s)</string>
+
+  <string name="about_title" translatable="false"><![CDATA[
+   <font color="#212121">%1$s</font>/10]]>
+    </string>
+  <string name="content_authority">me.bloodybadboy.popularmovies</string>
 </resources>

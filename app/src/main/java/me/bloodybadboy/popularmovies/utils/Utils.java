@@ -1,5 +1,8 @@
 package me.bloodybadboy.popularmovies.utils;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,21 +19,21 @@ public final class Utils {
     throw new AssertionError();
   }
 
-  public static String getPosterUrl(String posterPath) {
+  public static String getPosterUrl(@Nullable String posterPath) {
     if (posterPath == null) return "";
     return Constants.IMAGE_BASE_URL
         + Constants.POSTER_IMAGE_SIZE
         + posterPath;
   }
 
-  public static String getBackdropUrl(String backdropPath) {
+  public static String getBackdropUrl(@Nullable String backdropPath) {
     if (backdropPath == null) return "";
     return Constants.IMAGE_BASE_URL
         + Constants.BACKDROP_IMAGE_SIZE
         + backdropPath;
   }
 
-  public static String getDisplayableReadableDate(Date date) {
+  public static String getDisplayableReadableDate(@NonNull Date date) {
     return new SimpleDateFormat("dd MMM, yyyy - EEEE", Locale.ENGLISH).format(date);
   }
 
@@ -44,8 +47,8 @@ public final class Utils {
     return genresMap;
   }
 
-  public static String getDisplayableGenreList(Map<String, String> genresMap,
-      List<Integer> genreIds) {
+  public static String getDisplayableGenreList(@Nullable Map<String, String> genresMap,
+      @Nullable List<Integer> genreIds) {
     if (genresMap == null || genreIds == null) {
       return "";
     }
@@ -58,9 +61,18 @@ public final class Utils {
     return TextUtils.join(" | ", displayableGenres);
   }
 
-  public static Map<String, String> getQueryMapForMovieList(int page) {
+  public static Map<String, String> getQueryMapForMovieList(@NonNull int page) {
     Map<String, String> queryMap = new HashMap<>();
     queryMap.put(Constants.REQUEST_QUERY_PAGE, String.valueOf(page));
     return queryMap;
+  }
+
+  public static int getStatusBarHeight(@NonNull Context context) {
+    int result = 0;
+    int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+    if (resourceId > 0) {
+      result = context.getResources().getDimensionPixelSize(resourceId);
+    }
+    return result;
   }
 }

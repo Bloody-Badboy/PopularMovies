@@ -10,7 +10,16 @@ package me.bloodybadboy.popularmovies;
   public static final float POSTER_IMAGE_ASPECT_RATIO = 1.4f;
   public static final String MOVIE_DATA_EXTRA = PACKAGE + ".MOVIE_DATA_EXTRA";
 
-  public enum SortOrder {
-    POPULARITY, TOP_RATED
+  public enum SortByOrder {
+    POPULARITY("popular"), TOP_RATED("top_rated");
+    String mSortBy;
+
+    SortByOrder(String sortBy) {
+      mSortBy = sortBy;
+    }
+
+    @Override public String toString() {
+      return mSortBy;
+    }
   }
 }
