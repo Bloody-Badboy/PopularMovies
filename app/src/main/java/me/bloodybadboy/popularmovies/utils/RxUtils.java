@@ -1,7 +1,7 @@
 package me.bloodybadboy.popularmovies.utils;
 
 import android.support.annotation.Nullable;
-import io.reactivex.Single;
+import io.reactivex.CompletableTransformer;
 import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 public final class RxUtils {
 
   private RxUtils() {
-    throw new AssertionError();
+    throw new AssertionError("Can't create instance of a utility class.");
   }
 
   public static void dispose(@Nullable CompositeDisposable compositeDisposable) {
@@ -32,15 +32,15 @@ public final class RxUtils {
     }
   }
 
-  public static void addToCompositeSubscription(CompositeDisposable compositeDisposable,
-      Disposable disposable) {
+  public static void addToCompositeSubscription(@Nullable CompositeDisposable compositeDisposable,
+      @Nullable Disposable disposable) {
     if (compositeDisposable != null && disposable != null) {
       compositeDisposable.add(disposable);
     }
   }
 
   public static <T> SingleTransformer<T, T> applyIOScheduler() {
-    return tObservable -> tObservable.subscribeOn(Schedulers.io())
+    return upstream -> upstream.subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
   }
 

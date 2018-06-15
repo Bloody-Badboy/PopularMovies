@@ -11,6 +11,7 @@ import android.support.v4.util.Pair;
 import android.support.v7.graphics.Palette;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import me.bloodybadboy.popularmovies.Constants;
 import me.bloodybadboy.popularmovies.R;
 import me.bloodybadboy.popularmovies.data.model.Movie;
@@ -39,7 +39,7 @@ import me.bloodybadboy.popularmovies.storage.MovieGenreStore;
 import me.bloodybadboy.popularmovies.ui.homescreen.model.DetailsActivityLaunchModel;
 import me.bloodybadboy.popularmovies.utils.Utils;
 
-public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
   public static final int VIEW_TYPE_ITEM = 0;
   public static final int VIEW_TYPE_LOADING = 1;
@@ -48,7 +48,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
   private Context mContext;
   private boolean isLoadingItemAdded = false;
 
-  public MovieListAdapter(List<Movie> movies) {
+  public MoviesAdapter(List<Movie> movies) {
     this.mMovieList = movies;
   }
 
@@ -60,10 +60,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     if (viewType == VIEW_TYPE_ITEM) {
       view = layoutInflater.inflate(R.layout.listing_item_movie, parent, false);
       view.getLayoutParams().height = calculateMovieListItemHeight(parent);
-      return new MovieListViewHolder(view);
+      return new MovieListItemViewHolder(view);
     } else {
       view = layoutInflater.inflate(R.layout.listing_item_loading_row_layout, parent, false);
-      return new LoadingViewHolder(view);
+      return new LoadingItemViewHolder(view);
     }
   }
 
@@ -96,7 +96,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     mMovieList.clear();
     mMovieList.addAll(movies);
 
-    diffResult.dispatchUpdatesTo(MovieListAdapter.this);
+    diffResult.dispatchUpdatesTo(MoviesAdapter.this);
   }
 
   public void addLoadingItem() {
@@ -116,8 +116,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
   }
 
   private int calculateMovieListItemHeight(ViewGroup parent) {
-    int gridLayoutItemSpanCount =
-        mContext.getResources().getInteger(R.integer.movie_list_grid_cols);
+    int gridLayoutItemSpanCount = Utils.calculateNoOfColumns(mContext);
     float gridItemSpacing =
         mContext.getResources().getDimension(R.dimen.dimen_movie_list_grid_item_spacing);
 
@@ -128,30 +127,30 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
   }
 
   private void bindMovieListItemViewHolder(RecyclerView.ViewHolder viewHolder, Movie movie) {
-    MovieListViewHolder movieListViewHolder = (MovieListViewHolder) viewHolder;
+    MovieListItemViewHolder movieListItemViewHolder = (MovieListItemViewHolder) viewHolder;
     if (movie != null) {
-      movieListViewHolder.bind(mContext, movie, MovieGenreStore.getInstance().getGenresMap());
+      movieListItemViewHolder.bind(mContext, movie, MovieGenreStore.getInstance().get());
     }
   }
 
-  static class MovieListViewHolder extends RecyclerView.ViewHolder {
+  static class MovieListItemViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.iv_rv_item_movie_poster)
+    @BindView(R.id.iv_listing_item_movie_poster)
     ImageView mMoviePoster;
 
-    @BindView(R.id.tv_rv_item_movie_name)
+    @BindView(R.id.tv_listing_item_movie_name)
     TextView mMovieName;
 
-    @BindView(R.id.tv_rv_item_movie_genres)
+    @BindView(R.id.tv_listing_item_movie_genres)
     TextView mMovieGenre;
 
-    @BindView(R.id.tv_rv_item_movie_release_date)
+    @BindView(R.id.tv_listing_item_movie_release_date)
     TextView mMovieReleaseDate;
 
-    @BindView(R.id.rb_rv_item_movie_rating)
+    @BindView(R.id.rb_listing_item_movie_rating)
     RatingBar mMovieRatingBar;
 
-    @BindView(R.id.tv_rv_item_movie_rating_value)
+    @BindView(R.id.tv_listing_item_movie_rating_value)
     TextView mMovieRating;
 
     @BindView(R.id.movie_info_background)
@@ -159,7 +158,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private DecimalFormat mMovieRatingFormat = new DecimalFormat("0.0");
 
-    MovieListViewHolder(View itemView) {
+    MovieListItemViewHolder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
       itemView.setOnClickListener(v -> {
@@ -180,13 +179,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
       });
     }
 
-    void bind(Context context, Movie movie, Map<String, String> genresMap) {
+    void bind(Context context, Movie movie, SparseArray<String> genres) {
       mMovieName.setText(movie.getTitle());
       mMovieName.setSelected(true);
 
-      if (genresMap != null) {
+      if (genres != null) {
         mMovieGenre.setText(
-            Utils.getDisplayableGenreList(genresMap, movie.getGenreIds()));
+            Utils.getDisplayableGenreList(genres, movie.getGenreIds()));
         mMovieGenre.setSelected(true);
       } else {
         mMovieGenre.setText(R.string.unknown);
@@ -197,9 +196,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
       mMovieRatingBar.setRating(movieRating);
       mMovieRating.setText(mMovieRatingFormat.format(movieRating));
 
-      if(movie.getReleaseDate() != null){
+      if (movie.getReleaseDate() != null) {
         try {
-          Date date = new SimpleDateFormat("yyyy-MM-dd",Locale.getDefault()).parse(movie.getReleaseDate());
+          Date date =
+              new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(movie.getReleaseDate());
           mMovieReleaseDate.setText(Utils.getDisplayableReadableDate(date));
         } catch (ParseException e) {
           e.printStackTrace();
@@ -208,7 +208,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
       String posterUrl = Utils.getPosterUrl(movie.getPosterPath());
 
       RequestOptions options = new RequestOptions()
-       .placeholder(R.drawable.placeholder);
+          .placeholder(R.drawable.placeholder);
 
       Glide.with(context).asBitmap().load(posterUrl)
           .thumbnail(0.5f)
@@ -239,8 +239,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
   }
 
-  static class LoadingViewHolder extends RecyclerView.ViewHolder {
-    LoadingViewHolder(View itemView) {
+  static class LoadingItemViewHolder extends RecyclerView.ViewHolder {
+    LoadingItemViewHolder(View itemView) {
       super(itemView);
     }
   }

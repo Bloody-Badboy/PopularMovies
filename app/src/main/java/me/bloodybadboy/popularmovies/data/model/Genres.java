@@ -3,9 +3,8 @@ package me.bloodybadboy.popularmovies.data.model;
 import com.squareup.moshi.Json;
 import java.util.List;
 
-public class MovieGenreList {
-  @Json(name = "genres")
-  private List<Genre> mGenres;
+@SuppressWarnings("unused") public class Genres {
+  @Json(name = "genres") private List<Genre> mGenres;
 
   public List<Genre> getGenres() {
     return mGenres;

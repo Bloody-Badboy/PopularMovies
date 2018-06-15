@@ -1,14 +1,21 @@
 package me.bloodybadboy.popularmovies.data.source;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import java.util.Map;
-import me.bloodybadboy.popularmovies.data.model.MovieGenreList;
-import me.bloodybadboy.popularmovies.data.model.MovieList;
+import me.bloodybadboy.popularmovies.data.model.ExtendedMovieDetails;
+import me.bloodybadboy.popularmovies.data.model.Movie;
+import me.bloodybadboy.popularmovies.data.model.Genres;
+import me.bloodybadboy.popularmovies.data.model.Movies;
+
+import static me.bloodybadboy.popularmovies.Constants.MoviesFilterType;
 
 public interface MoviesDataSource {
-  Single<MovieGenreList> getMovieGenreList();
+  Single<Genres> getMovieGenreList();
 
-  Single<MovieList> getPopularMovieList(Map<String, String> options);
+  Single<Movies> getMovieList(MoviesFilterType moviesFilterType, Map<String, String> options);
 
-  Single<MovieList> getTopRatedMovieList(Map<String, String> options);
+  Single<ExtendedMovieDetails> getExtendedMovieDetails(String movieId);
+
+  Completable addMovieToFavourites(Movie movie);
 }

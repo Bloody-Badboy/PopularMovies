@@ -1,10 +1,16 @@
 package me.bloodybadboy.popularmovies.storage;
 
-import java.util.Map;
+import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
+import android.util.SparseArray;
+import java.util.HashMap;
+import java.util.List;
+import me.bloodybadboy.popularmovies.data.model.Genre;
 
 public class MovieGenreStore {
   private static volatile MovieGenreStore sInstance = null;
-  private Map<String, String> mGenresMap;
+  private final SparseArray<String> sparseArray = new SparseArray<>();
+  @SuppressLint("UseSparseArrays") private final HashMap<Integer, String> mMap = new HashMap<>();
 
   private MovieGenreStore() {
     if (sInstance != null) {
@@ -15,7 +21,7 @@ public class MovieGenreStore {
     }
   }
 
-  public static MovieGenreStore getInstance() {
+  @NonNull public static MovieGenreStore getInstance() {
     if (sInstance == null) {
       synchronized (MovieGenreStore.class) {
         if (sInstance == null) {
@@ -26,11 +32,20 @@ public class MovieGenreStore {
     return sInstance;
   }
 
-  public Map<String, String> getGenresMap() {
-    return mGenresMap;
+  public final void put(List<Genre> genreList) {
+    if (genreList != null) {
+      for (Genre genre : genreList) {
+        sparseArray.put(genre.getId(), genre.getName());
+      }
+    }
   }
 
-  public void store(Map<String, String> genresMap) {
-    this.mGenresMap = genresMap;
+  public final void clear() {
+    mMap.clear();
+    sparseArray.clear();
+  }
+
+  @NonNull public SparseArray<String> get() {
+    return sparseArray;
   }
 }

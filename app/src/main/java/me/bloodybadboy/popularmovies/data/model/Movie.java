@@ -19,34 +19,20 @@ import me.bloodybadboy.popularmovies.utils.ArrayUtils;
       return new Movie[size];
     }
   };
-  @Json(name = "vote_count")
-  private int mVoteCount;
-  @Json(name = "id")
-  private int mMovieId;
-  @Json(name = "video")
-  private boolean mVideo;
-  @Json(name = "vote_average")
-  private double mVoteAverage;
-  @Json(name = "title")
-  private String mTitle;
-  @Json(name = "popularity")
-  private double mPopularity;
-  @Json(name = "poster_path")
-  private String mPosterPath;
-  @Json(name = "original_language")
-  private String mOriginalLanguage;
-  @Json(name = "original_title")
-  private String mOriginalTitle;
-  @Json(name = "genre_ids")
-  private List<Integer> mGenreIds;
-  @Json(name = "backdrop_path")
-  private String mBackdropPath;
-  @Json(name = "adult")
-  private boolean mAdult;
-  @Json(name = "overview")
-  private String mOverview;
-  @Json(name = "release_date")
-  private String mReleaseDate;
+  @Json(name = "vote_count") private int mVoteCount;
+  @Json(name = "id") private int mMovieId;
+  @Json(name = "video") private boolean mVideo;
+  @Json(name = "vote_average") private double mVoteAverage;
+  @Json(name = "title") private String mTitle;
+  @Json(name = "popularity") private double mPopularity;
+  @Json(name = "poster_path") private String mPosterPath;
+  @Json(name = "original_language") private String mOriginalLanguage;
+  @Json(name = "original_title") private String mOriginalTitle;
+  @Json(name = "genre_ids") private List<Integer> mGenreIds;
+  @Json(name = "backdrop_path") private String mBackdropPath;
+  @Json(name = "adult") private boolean mAdult;
+  @Json(name = "overview") private String mOverview;
+  @Json(name = "release_date") private String mReleaseDate;
 
   protected Movie(Parcel in) {
     mVoteCount = in.readInt();
@@ -65,6 +51,25 @@ import me.bloodybadboy.popularmovies.utils.ArrayUtils;
     mReleaseDate = in.readString();
   }
 
+
+  private Movie(Builder builder){
+    mVoteCount  = builder.mVoteCount;
+    mMovieId = builder.mMovieId;
+    mVideo = builder.mVideo;
+    mVoteAverage = builder.mVoteAverage;
+    mTitle = builder.mTitle;
+    mPopularity = builder.mPopularity;
+    mPosterPath = builder.mPosterPath;
+    mOriginalLanguage  = builder.mOriginalLanguage;
+    mOriginalTitle = builder.mOriginalTitle;
+    mGenreIds = builder.mGenreIds;
+    mBackdropPath = builder.mBackdropPath;
+    mAdult = builder.mAdult;
+    mOverview = builder.mOverview;
+    mReleaseDate = builder.mReleaseDate;
+  }
+
+  
   @Override public String toString() {
     return "Movie{" +
         "VoteCount=" + mVoteCount +
@@ -197,5 +202,97 @@ import me.bloodybadboy.popularmovies.utils.ArrayUtils;
     dest.writeByte((byte) (mAdult ? 1 : 0));
     dest.writeString(mOverview);
     dest.writeString(mReleaseDate);
+  }
+  public static class Builder {
+
+    private boolean mAdult;
+    private String mBackdropPath;
+    private List<Integer> mGenreIds;
+    private int mMovieId;
+    private String mOriginalLanguage;
+    private String mOriginalTitle;
+    private String mOverview;
+    private Double mPopularity;
+    private String mPosterPath;
+    private String mReleaseDate;
+    private String mTitle;
+    private boolean mVideo;
+    private Double mVoteAverage;
+    private int mVoteCount;
+
+    public Builder withAdult(boolean adult) {
+      mAdult = adult;
+      return this;
+    }
+
+    public Builder withBackdropPath(String backdropPath) {
+      mBackdropPath = backdropPath;
+      return this;
+    }
+
+    public Builder withGenreIds(List<Integer> genreIds) {
+      mGenreIds = genreIds;
+      return this;
+    }
+
+    public Builder withId(int id) {
+      mMovieId = id;
+      return this;
+    }
+
+    public Builder withOriginalLanguage(String originalLanguage) {
+      mOriginalLanguage = originalLanguage;
+      return this;
+    }
+
+    public Builder withOriginalTitle(String originalTitle) {
+      mOriginalTitle = originalTitle;
+      return this;
+    }
+
+    public Builder withOverview(String overview) {
+      mOverview = overview;
+      return this;
+    }
+
+    public Builder withPopularity(double popularity) {
+      mPopularity = popularity;
+      return this;
+    }
+
+    public Builder withPosterPath(String posterPath) {
+      mPosterPath = posterPath;
+      return this;
+    }
+
+    public Builder withReleaseDate(String releaseDate) {
+      mReleaseDate = releaseDate;
+      return this;
+    }
+
+    public Builder withTitle(String title) {
+      mTitle = title;
+      return this;
+    }
+
+    public Builder withVideo(boolean video) {
+      mVideo = video;
+      return this;
+    }
+
+    public Builder withVoteAverage(double voteAverage) {
+      mVoteAverage = voteAverage;
+      return this;
+    }
+
+    public Builder withVoteCount(int voteCount) {
+      mVoteCount = voteCount;
+      return this;
+    }
+
+    public Movie build() {
+      return new Movie(this);
+    }
+
   }
 }

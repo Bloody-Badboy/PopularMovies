@@ -1,6 +1,13 @@
 package me.bloodybadboy.popularmovies.utils;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.SparseArray;
+import com.squareup.moshi.Types;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,28 +16,33 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import me.bloodybadboy.popularmovies.Constants;
+import me.bloodybadboy.popularmovies.R;
 import me.bloodybadboy.popularmovies.data.model.Genre;
 
 public final class Utils {
+
+  private static final Type sTypeIntegerList =
+      Types.newParameterizedType(List.class, Integer.class);
+
   private Utils() {
-    throw new AssertionError();
+    throw new AssertionError("Can't create instance of a utility class.");
   }
 
-  public static String getPosterUrl(String posterPath) {
-    if (posterPath == null) return "";
+  @Nullable public static String getPosterUrl(@Nullable String posterPath) {
+    if (posterPath == null || TextUtils.isEmpty(posterPath)) return null;
     return Constants.IMAGE_BASE_URL
         + Constants.POSTER_IMAGE_SIZE
         + posterPath;
   }
 
-  public static String getBackdropUrl(String backdropPath) {
-    if (backdropPath == null) return "";
+  @Nullable public static String getBackdropUrl(@Nullable String backdropPath) {
+    if (backdropPath == null || TextUtils.isEmpty(backdropPath)) return null;
     return Constants.IMAGE_BASE_URL
         + Constants.BACKDROP_IMAGE_SIZE
         + backdropPath;
   }
 
-  public static String getDisplayableReadableDate(Date date) {
+  public static String getDisplayableReadableDate(@NonNull Date date) {
     return new SimpleDateFormat("dd MMM, yyyy - EEEE", Locale.ENGLISH).format(date);
   }
 
@@ -44,23 +56,42 @@ public final class Utils {
     return genresMap;
   }
 
-  public static String getDisplayableGenreList(Map<String, String> genresMap,
-      List<Integer> genreIds) {
-    if (genresMap == null || genreIds == null) {
-      return "";
+  @Nullable public static String getDisplayableGenreList(@Nullable SparseArray<String> genres,
+      @Nullable List<Integer> genreIds) {
+    if (genres == null || genreIds == null) {
+      return null;
     }
     List<String> displayableGenres = new ArrayList<>();
     for (Integer genreId : genreIds) {
-      if (genresMap.containsKey(String.valueOf(genreId))) {
-        displayableGenres.add(genresMap.get(String.valueOf(genreId)));
+      if (genres.indexOfKey(genreId) >= 0) {
+        displayableGenres.add(genres.get(genreId));
       }
     }
     return TextUtils.join(" | ", displayableGenres);
   }
 
-  public static Map<String, String> getQueryMapForMovieList(int page) {
+  public static Map<String, String> getQueryMapForMovieList(@NonNull int page) {
     Map<String, String> queryMap = new HashMap<>();
     queryMap.put(Constants.REQUEST_QUERY_PAGE, String.valueOf(page));
     return queryMap;
+  }
+
+  public static int calculateNoOfColumns(Context context) {
+    DisplayMetrics mDisplayMetrics = context.getResources().getDisplayMetrics();
+    float itemWidth = context.getResources().getDimension(R.dimen.movie_list_grid_item_min_width);
+    int col = (int) (mDisplayMetrics.widthPixels / itemWidth) < 0 ? context.getResources()
+        .getInteger(R.integer.movie_list_grid_min_cols)
+        : (int) (mDisplayMetrics.widthPixels / itemWidth);
+    int maxCols = context.getResources().getInteger(R.integer.movie_list_grid_max_cols);
+    return col > maxCols ? maxCols : col;
+  }
+
+  public static int getStatusBarHeight(@NonNull Context context) {
+    int result = 0;
+    int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+    if (resourceId > 0) {
+      result = context.getResources().getDimensionPixelSize(resourceId);
+    }
+    return result;
   }
 }

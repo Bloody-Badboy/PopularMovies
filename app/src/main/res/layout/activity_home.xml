@@ -18,7 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:fastScrollEnabled="false"
+        tools:listitem="@layout/listing_item_movie"
         />
     <include
         layout="@layout/listing_item_loading_row_layout"
