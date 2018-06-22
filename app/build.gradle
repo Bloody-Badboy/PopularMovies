@@ -11,6 +11,8 @@ android {
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    vectorDrawables.useSupportLibrary = true
   }
 
   buildTypes {
@@ -65,6 +67,10 @@ dependencies {
   // Timber
   implementation "com.jakewharton.timber:timber:${rootProject.versions.timber}"
 
+  // Leak Canary
+  debugImplementation "com.squareup.leakcanary:leakcanary-android:${rootProject.versions.leakCanary}"
+  releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.versions.leakCanary}"
+
   // RxJava and RxAndroid
   implementation "io.reactivex.rxjava2:rxjava:${rootProject.versions.rxJava2}"
   implementation "io.reactivex.rxjava2:rxandroid:${rootProject.versions.rxAndroid2}"
@@ -76,9 +82,6 @@ dependencies {
   // RxJava Retrofit2 Adapter
   implementation "com.squareup.retrofit2:adapter-rxjava2:${rootProject.versions.rxRetrofit2Adapter}"
 
-  // OkHttp Logging Interceptor
-  implementation "com.squareup.okhttp3:logging-interceptor:${rootProject.versions.loggingInterceptor}"
-
   // ButterKnife
   implementation "com.jakewharton:butterknife:${rootProject.versions.butterKnife}"
   annotationProcessor "com.jakewharton:butterknife-compiler:${rootProject.versions.butterKnife}"
@@ -87,8 +90,12 @@ dependencies {
   implementation "com.github.bumptech.glide:glide:${rootProject.versions.glide}"
   annotationProcessor "com.github.bumptech.glide:compiler:${rootProject.versions.glide}"
 
-  // Blurry
-  implementation "jp.wasabeef:blurry:${rootProject.versions.blurry}"
+  // Stetho
+  implementation "com.facebook.stetho:stetho:${rootProject.versions.stetho}"
+  implementation "com.facebook.stetho:stetho-okhttp3:${rootProject.versions.stetho}"
+
+  //Circle ImageView
+  implementation "de.hdodenhof:circleimageview:${rootProject.versions.circleImageView}"
 
   // Testing
   testImplementation "junit:junit:${rootProject.versions.junit}"

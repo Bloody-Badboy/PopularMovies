@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.movies.view.MoviesActivity"
+    >
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_movies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:visibility="visible"
+        app:fastScrollEnabled="false"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        tools:listitem="@layout/listing_item_movie"
+        />
+    <include
+        layout="@layout/listing_item_loading_row_layout"
+        android:id="@+id/layout_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        />
+    <TextView
+        android:id="@+id/tv_movies_empty_favourites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/nothing_to_show_in_favourites"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:visibility="invisible"
+        />
+  </RelativeLayout>
+  <android.support.design.widget.AppBarLayout
+      android:id="@+id/appBarLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_scrollFlags="scroll|enterAlways"
+        >
+
+      <View
+          android:id="@+id/status_bar"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/default_status_bar_height"
+          android:background="@color/colorPrimaryDark"
+          />
+
+      <android.support.v7.widget.Toolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          android:background="@android:color/transparent"
+          app:layout_scrollFlags="scroll|enterAlways"
+          app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+          app:title="@string/app_name"
+          app:titleTextAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
+          />
+    </LinearLayout>
+
+
+  </android.support.design.widget.AppBarLayout>
+
+</android.support.design.widget.CoordinatorLayout>

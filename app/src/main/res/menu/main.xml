@@ -4,6 +4,7 @@
   <item
       android:icon="@drawable/ic_sort_white"
       android:title="@string/menu_title_sort_by"
+      app:iconTint="@android:color/black"
       app:showAsAction="ifRoom">
     <menu>
       <group android:checkableBehavior="single">
@@ -14,6 +15,9 @@
         <item
             android:id="@+id/sort_by_rating"
             android:title="@string/menu_title_sort_by_top_rated"/>
+        <item
+            android:id="@+id/sort_by_favourites"
+            android:title="@string/menu_title_sort_by_favourites"/>
       </group>
     </menu>
   </item>

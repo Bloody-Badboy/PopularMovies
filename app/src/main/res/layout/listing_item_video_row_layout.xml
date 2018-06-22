@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/default_list_item_row_height"
+    android:foreground="?attr/selectableItemBackground"
+    >
+  <ImageView
+      android:id="@+id/iv_listing_item_casts_profile_picture"
+      android:layout_width="@dimen/default_space_none"
+      android:layout_height="@dimen/default_space_none"
+      android:layout_marginBottom="@dimen/default_space_small"
+      android:layout_marginLeft="@dimen/default_space_small"
+      android:layout_marginStart="@dimen/default_space_small"
+      android:layout_marginTop="@dimen/default_space_small"
+      android:scaleType="fitXY"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintDimensionRatio="4:3"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:contentDescription="@null"
+      />
+  <TextView
+      android:id="@+id/tv_listing_item_casts_name"
+      android:layout_width="@dimen/default_space_none"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/default_space_small"
+      android:layout_marginLeft="@dimen/default_space_small"
+      android:layout_marginRight="@dimen/default_space_small"
+      android:layout_marginStart="@dimen/default_space_small"
+      android:textColor="@color/colorTextPrimary"
+      app:layout_constraintBottom_toBottomOf="@+id/iv_listing_item_casts_profile_picture"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toEndOf="@+id/iv_listing_item_casts_profile_picture"
+      app:layout_constraintTop_toTopOf="@+id/iv_listing_item_casts_profile_picture"
+      app:layout_constraintVertical_chainStyle="packed"
+      tools:text="Interstellar - Trailer"
+      />
+
+  <ImageView
+      android:id="@+id/iv_play_icon"
+      android:layout_width="@dimen/play_icon_size"
+      android:layout_height="@dimen/play_icon_size"
+      app:layout_constraintBottom_toBottomOf="@+id/iv_listing_item_casts_profile_picture"
+      app:layout_constraintEnd_toEndOf="@+id/iv_listing_item_casts_profile_picture"
+      app:layout_constraintStart_toStartOf="@+id/iv_listing_item_casts_profile_picture"
+      app:layout_constraintTop_toTopOf="@+id/iv_listing_item_casts_profile_picture"
+      app:srcCompat="@drawable/ic_play_arrow"
+      android:contentDescription="@null"
+      />
+  <View
+      android:id="@+id/view"
+      android:layout_width="@dimen/default_space_none"
+      android:layout_height="@dimen/default_divider_height"
+      android:layout_marginTop="@dimen/default_space_small"
+      android:background="@color/colorDivider"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/iv_listing_item_casts_profile_picture"
+      app:layout_constraintVertical_bias="1.0"
+      />
+</android.support.constraint.ConstraintLayout>

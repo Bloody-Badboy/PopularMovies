@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/default_space_small"
+      android:layout_marginRight="@dimen/default_space_small"
+      android:orientation="vertical"
+      android:padding="@dimen/default_space_small"
+      >
+    <TextView
+        android:id="@+id/tv_listing_item_review_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_space_tiny"
+        android:layout_marginTop="@dimen/default_space_tiny"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorTextPrimary"
+        tools:text="Lorem ipsum"
+        />
+    <TextView
+        android:id="@+id/tv_listing_item_review_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_space_tiny"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="@dimen/dimen_text_small"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut pretium risus. Suspendisse interdum et turpis ac auctor. Duis id lorem in risus placerat malesuada nec ac enim. Vestibulum sed."
+        />
+  </LinearLayout>
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/default_divider_height"
+      android:background="@color/colorDivider"
+      />
+</LinearLayout>

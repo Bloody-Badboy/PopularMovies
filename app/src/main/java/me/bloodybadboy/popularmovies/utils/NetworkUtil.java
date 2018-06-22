@@ -8,7 +8,7 @@ import me.bloodybadboy.popularmovies.injection.Injection;
 public final class NetworkUtil {
 
   private NetworkUtil() {
-    throw new AssertionError();
+    throw new AssertionError("Can't create instance of a utility class.");
   }
   public static boolean isOnline() {
 

@@ -4,7 +4,7 @@ buildscript {
 
   ext.versions = [
       'supportLibrary': '27.1.1',
-      'constraintLayout': '1.1.0',
+      'constraintLayout': '1.1.2',
       'junit': '4.12',
       'supportTestRunner': '1.0.2',
       'espressoCore': '3.0.2',
@@ -12,11 +12,12 @@ buildscript {
       'rxJava2': '2.1.14',
       'retrofit': '2.4.0',
       'rxRetrofit2Adapter': '2.4.0',
-      'loggingInterceptor': '3.8.1',
+      'stetho': '1.5.0',
       'timber': '4.7.0',
+      'leakCanary': '1.5.4',
       'glide': '4.7.1',
       'butterKnife': '8.8.1',
-      'blurry': '2.1.1'
+      'circleImageView': '2.2.0'
 
   ]
   repositories {
@@ -24,7 +25,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.1.2'
+    classpath 'com.android.tools.build:gradle:3.2.0-beta01'
 
 
     // NOTE: Do not place your application dependencies here; they belong
@@ -54,7 +55,7 @@ task clean(type: Delete) {
   delete rootProject.buildDir
 }
 
-def propOrThrow(String name) {
+@SuppressWarnings("GroovyUnusedDeclaration") def propOrThrow(String name) {
   if (hasProperty(name)) {
     return getProperty(name)
   } else {

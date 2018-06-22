@@ -1,13 +1,18 @@
 package me.bloodybadboy.popularmovies.data.source;
 
+import android.support.annotation.NonNull;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import java.util.Map;
-import me.bloodybadboy.popularmovies.data.model.MovieGenreList;
-import me.bloodybadboy.popularmovies.data.model.MovieList;
+import me.bloodybadboy.popularmovies.Constants.MoviesFilterType;
+import me.bloodybadboy.popularmovies.data.model.ExtendedMovieDetails;
+import me.bloodybadboy.popularmovies.data.model.Genres;
+import me.bloodybadboy.popularmovies.data.model.Movie;
+import me.bloodybadboy.popularmovies.data.model.Movies;
 
 public class MoviesDataRepository implements MoviesDataSource {
 
-  private static MoviesDataRepository INSTANCE = null;
+  private volatile static MoviesDataRepository INSTANCE = null;
   private final MoviesDataSource mLocalDataSource;
   private final MoviesDataSource mRemoteDataSource;
 
@@ -29,15 +34,32 @@ public class MoviesDataRepository implements MoviesDataSource {
     return INSTANCE;
   }
 
-  @Override public Single<MovieGenreList> getMovieGenreList() {
+  @NonNull @Override public Single<Genres> getMovieGenreList() {
     return mRemoteDataSource.getMovieGenreList();
   }
 
-  @Override public Single<MovieList> getPopularMovieList(Map<String, String> options) {
-    return mRemoteDataSource.getPopularMovieList(options);
+  @NonNull @Override public Single<Movies> getMovieList(@NonNull MoviesFilterType moviesFilterType,
+      @NonNull Map<String, String> options) {
+    if (moviesFilterType == MoviesFilterType.FAVOURITES) {
+      return mLocalDataSource.getMovieList(moviesFilterType, options);
+    }
+    return mRemoteDataSource.getMovieList(moviesFilterType, options);
   }
 
-  @Override public Single<MovieList> getTopRatedMovieList(Map<String, String> options) {
-    return mRemoteDataSource.getTopRatedMovieList(options);
+  @NonNull @Override
+  public Single<ExtendedMovieDetails> getExtendedMovieDetails(@NonNull String movieId) {
+    return mRemoteDataSource.getExtendedMovieDetails(movieId);
+  }
+
+  @NonNull @Override public Single<Boolean> isMovieInFavourites(int movieId) {
+    return mLocalDataSource.isMovieInFavourites(movieId);
+  }
+
+  @NonNull @Override public Completable addMovieToFavourites(@NonNull Movie movie) {
+    return mLocalDataSource.addMovieToFavourites(movie);
+  }
+
+  @NonNull @Override public Completable removeMovieFromFavourites(int movieId) {
+    return mLocalDataSource.removeMovieFromFavourites(movieId);
   }
 }

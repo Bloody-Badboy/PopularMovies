@@ -1,7 +1,7 @@
 <resources>
 
   <!-- Base application theme. -->
-  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+  <style name="Base.AppTheme" parent="Theme.AppCompat.Light">
     <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -10,8 +10,36 @@
     <item name="windowNoTitle">true</item>
   </style>
 
-  <style name="RatingBarWhite" parent="Theme.AppCompat">
+  <style name="AppTheme.OverlapSystemBarNavBar" parent="Base.AppTheme"/>
+
+  <style name="AppTheme.OverlapSystemBar" parent="Base.AppTheme"/>
+
+
+  <style name="RatingBar.Theme.White" parent="Base.AppTheme">
     <item name="colorControlNormal">@android:color/white</item>
     <item name="colorControlActivated">@android:color/white</item>
+  </style>
+
+  <style name="RatingBar.Theme.Amber" parent="Base.AppTheme">
+    <item name="colorControlNormal">#FFC107</item>
+    <item name="colorControlActivated">#FFC107</item>
+  </style>
+
+  <style name="MovieInfoLabelText" parent="TextAppearance.AppCompat.Small">
+    <item name="android:textColor">@color/colorTextSecondary</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:layout_marginTop">8dp</item>
+  </style>
+
+  <style name="MovieInfoText" parent="TextAppearance.AppCompat.Small">
+    <item name="android:textColor">@color/colorTextPrimary</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:layout_marginLeft">4dp</item>
+    <item name="android:layout_marginRight">4dp</item>
+  </style>
+
+  <style name="TabLayout.TextAppearance" parent="TextAppearance.Design.Tab">
+    <item name="android:textSize">14sp</item>
+    <item name="android:maxLines">1</item>
   </style>
 </resources>

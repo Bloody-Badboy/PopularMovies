@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv_reviews"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:listitem="@layout/listing_item_review_row_layout"
+      />
+  <LinearLayout
+      android:id="@+id/ll_no_reviews"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:visibility="invisible"
+      tools:ignore="UseCompoundDrawables"
+      tools:visibility="visible"
+      >
+    <ImageView
+        android:layout_width="@dimen/not_found_image_size"
+        android:layout_height="@dimen/not_found_image_size"
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/ic_not_found_dead"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_space_small"
+        android:text="@string/no_reviews_found"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorTextSecondary"
+        android:textStyle="bold"
+        />
+  </LinearLayout>
+</FrameLayout>

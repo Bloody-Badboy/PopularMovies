@@ -1,17 +1,23 @@
 package me.bloodybadboy.popularmovies.data.source.remote;
 
+import android.support.annotation.NonNull;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import java.util.Map;
-import me.bloodybadboy.popularmovies.data.model.MovieGenreList;
-import me.bloodybadboy.popularmovies.data.model.MovieList;
+import me.bloodybadboy.popularmovies.data.model.ExtendedMovieDetails;
+import me.bloodybadboy.popularmovies.data.model.Genres;
+import me.bloodybadboy.popularmovies.data.model.Movie;
+import me.bloodybadboy.popularmovies.data.model.Movies;
 import me.bloodybadboy.popularmovies.data.source.MoviesDataSource;
+
+import static me.bloodybadboy.popularmovies.Constants.MoviesFilterType;
 
 public class MoviesRemoteDataSource implements MoviesDataSource {
 
-  public static MoviesRemoteDataSource INSTANCE;
+  private static volatile MoviesRemoteDataSource sInstance;
 
-  private TheMovieDbApiService mTheMovieDbApiService;
-  private String mApiKey;
+  private final TheMovieDbApiService mTheMovieDbApiService;
+  private final String mApiKey;
 
   private MoviesRemoteDataSource(TheMovieDbApiService theMovieDbApiService, String apiKey) {
     mTheMovieDbApiService = theMovieDbApiService;
@@ -20,25 +26,40 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
 
   public static MoviesDataSource getInstance(TheMovieDbApiService theMovieDbApiService,
       String apiKey) {
-    if (INSTANCE == null) {
+    if (sInstance == null) {
       synchronized (MoviesRemoteDataSource.class) {
-        if (INSTANCE == null) {
-          INSTANCE = new MoviesRemoteDataSource(theMovieDbApiService, apiKey);
+        if (sInstance == null) {
+          sInstance = new MoviesRemoteDataSource(theMovieDbApiService, apiKey);
         }
       }
     }
-    return INSTANCE;
+    return sInstance;
   }
 
-  @Override public Single<MovieGenreList> getMovieGenreList() {
+  @NonNull @Override public Single<Genres> getMovieGenreList() {
     return mTheMovieDbApiService.getMovieGenreList(mApiKey);
   }
 
-  @Override public Single<MovieList> getPopularMovieList(Map<String, String> options) {
-    return mTheMovieDbApiService.getPopularMovieList(mApiKey, options);
+  @NonNull @Override
+  public Single<Movies> getMovieList(@NonNull MoviesFilterType moviesFilterType, @NonNull
+      Map<String, String> options) {
+    return mTheMovieDbApiService.getMovieList(moviesFilterType.toString(), mApiKey, options);
   }
 
-  @Override public Single<MovieList> getTopRatedMovieList(Map<String, String> options) {
-    return mTheMovieDbApiService.getTopRatedMovieList(mApiKey, options);
+  @NonNull @Override
+  public Single<ExtendedMovieDetails> getExtendedMovieDetails(@NonNull String movieId) {
+    return mTheMovieDbApiService.getExtendedMovieDetails(movieId, mApiKey);
+  }
+
+  @NonNull @Override public Single<Boolean> isMovieInFavourites(int movieId) {
+    throw new UnsupportedOperationException("Not supported");
+  }
+
+  @NonNull @Override public Completable addMovieToFavourites(@NonNull Movie movie) {
+    throw new UnsupportedOperationException("Not supported");
+  }
+
+  @NonNull @Override public Completable removeMovieFromFavourites(int movieId) {
+    throw new UnsupportedOperationException("Not supported");
   }
 }

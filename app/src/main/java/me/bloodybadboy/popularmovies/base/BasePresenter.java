@@ -1,7 +1,14 @@
 package me.bloodybadboy.popularmovies.base;
 
-public interface BasePresenter {
-  void onCreate();
+import android.support.annotation.NonNull;
 
-  void onDestroy();
+public interface BasePresenter<V extends BaseView> {
+
+  void attachView(@NonNull V view);
+
+  void detachView();
+
+  void subscribe();
+
+  void unsubscribe();
 }
