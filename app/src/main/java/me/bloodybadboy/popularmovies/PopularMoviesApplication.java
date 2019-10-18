@@ -1,6 +1,6 @@
 package me.bloodybadboy.popularmovies;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 import timber.log.Timber;

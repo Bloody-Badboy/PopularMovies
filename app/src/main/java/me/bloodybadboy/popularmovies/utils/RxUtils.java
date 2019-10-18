@@ -1,7 +1,6 @@
 package me.bloodybadboy.popularmovies.utils;
 
-import android.support.annotation.Nullable;
-import io.reactivex.CompletableTransformer;
+import androidx.annotation.Nullable;
 import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;

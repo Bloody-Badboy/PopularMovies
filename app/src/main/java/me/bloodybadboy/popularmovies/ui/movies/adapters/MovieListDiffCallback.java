@@ -1,6 +1,6 @@
 package me.bloodybadboy.popularmovies.ui.movies.adapters;
 
-import android.support.v7.util.DiffUtil;
+import androidx.recyclerview.widget.DiffUtil;
 import java.util.List;
 import me.bloodybadboy.popularmovies.data.model.Movie;
 

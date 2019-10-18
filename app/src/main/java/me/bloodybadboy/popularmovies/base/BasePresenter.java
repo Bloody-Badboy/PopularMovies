@@ -1,6 +1,6 @@
 package me.bloodybadboy.popularmovies.base;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public interface BasePresenter<V extends BaseView> {
 

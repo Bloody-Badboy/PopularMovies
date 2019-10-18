@@ -1,6 +1,6 @@
 package me.bloodybadboy.popularmovies.ui.movies.presenter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import java.io.IOException;

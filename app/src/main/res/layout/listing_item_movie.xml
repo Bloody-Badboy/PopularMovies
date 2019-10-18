@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-  <android.support.v7.widget.CardView
+  <androidx.cardview.widget.CardView
       android:id="@+id/card_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -14,7 +14,7 @@
       app:cardCornerRadius="@dimen/listing_item_card_corner_radius"
       app:cardElevation="@dimen/listing_item_card_elevation"
       >
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -118,7 +118,7 @@
           app:layout_constraintTop_toTopOf="@+id/rb_listing_item_movie_rating"
           tools:text="4.7"
           />
-    </android.support.constraint.ConstraintLayout>
-  </android.support.v7.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.cardview.widget.CardView>
 </FrameLayout>
 

@@ -1,6 +1,6 @@
 package me.bloodybadboy.popularmovies.ui.details.presenter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;

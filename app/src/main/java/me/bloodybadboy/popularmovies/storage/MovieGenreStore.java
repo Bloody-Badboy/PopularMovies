@@ -1,7 +1,7 @@
 package me.bloodybadboy.popularmovies.storage;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.SparseArray;
 import java.util.HashMap;
 import java.util.List;

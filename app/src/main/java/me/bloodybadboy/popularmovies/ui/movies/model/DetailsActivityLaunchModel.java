@@ -1,6 +1,6 @@
 package me.bloodybadboy.popularmovies.ui.movies.model;
 
-import android.support.v4.util.Pair;
+import androidx.core.util.Pair;
 import android.view.View;
 import me.bloodybadboy.popularmovies.data.model.Movie;
 

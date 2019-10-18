@@ -3,7 +3,7 @@ package me.bloodybadboy.popularmovies.data.source.local;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v7.view.menu.MenuView;
+import androidx.appcompat.view.menu.MenuView;
 
 public class MovieDB extends SQLiteOpenHelper {
 

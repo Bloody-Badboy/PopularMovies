@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 
 android {
 
-  compileSdkVersion 27
+  compileSdkVersion 29
 
   defaultConfig {
     applicationId "me.bloodybadboy.popularmovies"
     minSdkVersion 16
-    targetSdkVersion 27
+    targetSdkVersion 29
     versionCode 1
     versionName "1.0"
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     vectorDrawables.useSupportLibrary = true
   }
@@ -47,22 +47,22 @@ dependencies {
 
   // Android Support Libraries
   // AppCompat
-  implementation "com.android.support:appcompat-v7:${rootProject.versions.supportLibrary}"
+  implementation "androidx.appcompat:appcompat:${rootProject.versions.appcompat}"
 
   // Support Design
-  implementation "com.android.support:design:${rootProject.versions.supportLibrary}"
+  implementation "com.google.android.material:material:${rootProject.versions.androidSupport}"
 
   // CardView
-  implementation "com.android.support:cardview-v7:${rootProject.versions.supportLibrary}"
+  implementation "androidx.cardview:cardview:${rootProject.versions.androidSupport}"
 
   // RecycleView
-  implementation "com.android.support:recyclerview-v7:${rootProject.versions.supportLibrary}"
+  implementation "androidx.recyclerview:recyclerview:${rootProject.versions.androidSupport}"
 
   // Palette
-  implementation "com.android.support:palette-v7:${rootProject.versions.supportLibrary}"
+  implementation "androidx.palette:palette:${rootProject.versions.androidSupport}"
 
   // Constraint Layout
-  implementation "com.android.support.constraint:constraint-layout:${rootProject.versions.constraintLayout}"
+  implementation "androidx.constraintlayout:constraintlayout:${rootProject.versions.constraintLayout}"
 
   // Timber
   implementation "com.jakewharton.timber:timber:${rootProject.versions.timber}"
@@ -99,6 +99,6 @@ dependencies {
 
   // Testing
   testImplementation "junit:junit:${rootProject.versions.junit}"
-  androidTestImplementation "com.android.support.test:runner:${rootProject.versions.supportTestRunner}"
-  androidTestImplementation "com.android.support.test.espresso:espresso-core:${rootProject.versions.espressoCore}"
+  androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+  androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.versions.espressoCore}"
 }

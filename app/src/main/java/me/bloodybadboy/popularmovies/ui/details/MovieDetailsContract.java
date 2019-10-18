@@ -1,6 +1,6 @@
 package me.bloodybadboy.popularmovies.ui.details;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import me.bloodybadboy.popularmovies.base.BasePresenter;
 import me.bloodybadboy.popularmovies.base.BaseView;
 import me.bloodybadboy.popularmovies.data.model.ExtendedMovieDetails;

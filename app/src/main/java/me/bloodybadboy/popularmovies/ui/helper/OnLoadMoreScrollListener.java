@@ -1,7 +1,7 @@
 package me.bloodybadboy.popularmovies.ui.helper;
 
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class OnLoadMoreScrollListener extends RecyclerView.OnScrollListener {
 
