@@ -14,11 +14,11 @@ Movies List Screen 1           |  Movies List Screen 2
 :-------------------------:|:-------------------------:
 ![](screenshots/screenshot_list_1.jpg) | ![](screenshots/screenshot_list_2.jpg)
 
-Game Detail Screen           |  Game Detail Casts
+Movie Detail Screen           |  Movie Detail Casts
 :-------------------------:|:-------------------------:
 ![](screenshots/screenshot_details.jpg) | ![](screenshots/screenshot_details_casts.jpg)
 
-Game Detail Videos            |  Game Detail Reviews
+Movie Detail Videos            |  Movie Detail Reviews
 :-------------------------:|:-------------------------:
 ![](screenshots/screenshot_details_videos.jpg) | ![](screenshots/screenshot_details_reviews.jpg)
 
